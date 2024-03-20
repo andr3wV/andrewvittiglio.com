@@ -10,7 +10,7 @@ import ThemeProvider from '@/components/Providers/ThemeProvider';
 
 export const metadata = {
   title: 'Andrew Vittiglio',
-  description: 'I build things for the web.',
+  description: 'I love building things.',
 };
 
 interface RootLayoutProps {

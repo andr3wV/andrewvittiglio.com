@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ReactElement, useContext, useEffect, useRef } from 'react';
+
+import { ReactElement, useContext, useState, useEffect, useRef } from 'react';
 import { HiOutlineArrowNarrowDown } from 'react-icons/hi';
 import { ScrollContext } from './Providers/ScrollProvider';
 import { renderCanvas } from './renderCanvas';
@@ -10,6 +11,24 @@ import { renderCanvas } from './renderCanvas';
 export default function Hero(): ReactElement {
   const ref = useRef<HTMLHeadingElement>(null);
   const { scrollY } = useContext(ScrollContext);
+
+  // Ref for the element where the text will be displayed
+  const textRef = useRef<HTMLHeadingElement>(null);
+
+  // The array of strings to cycle through
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const texts = [
+    'a software developer',
+    'a 2017 US Open ballboy',
+    'drinks apple juice out of a wine glass to feel fancy',
+    '"a handsome young man" — my grandma',
+    "Time Magazine's 2006 Person of the Year",
+  ];
+
+  // State to keep track of the current text and character index
+  const [index, setIndex] = useState(0); // Index of the current string in the array
+  const [charIndex, setCharIndex] = useState(0); // Index of the current character in the string
+  const [isDeleting, setIsDeleting] = useState(false); // Whether the text is being deleted
 
   let progress = 0;
   const { current: elContainer } = ref;
@@ -22,11 +41,41 @@ export default function Hero(): ReactElement {
     renderCanvas();
   }, []);
 
+  useEffect(() => {
+    const speed = isDeleting ? 25 : 60; // Speed of typing or deleting
+    let timeout: NodeJS.Timeout | null = null;
+
+    if (charIndex === texts[index].length + 1 && !isDeleting) {
+      // Pause after typing the full string before starting to delete
+      timeout = setTimeout(() => {
+        setIsDeleting(true);
+      }, 1500);
+    } else if (isDeleting && charIndex === 0) {
+      // Once text is fully deleted, move to the next string
+      setIsDeleting(false);
+      setIndex((prevIndex) => (prevIndex + 1) % texts.length); // Cycle back to start when reaching the end
+    } else {
+      // Typing or deleting
+      timeout = setTimeout(() => {
+        setCharIndex((currentCharIndex) => currentCharIndex + (isDeleting ? -1 : 1));
+      }, speed);
+    }
+
+    if (textRef && textRef.current) {
+      textRef.current.innerHTML = charIndex === 0 ? '&nbsp;' : texts[index].substring(0, charIndex);
+    }
+
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
+  }, [charIndex, index, isDeleting, texts]);
+
   return (
     <div>
       <h1 className="sr-only">
-        Hello I'm Andrew Vittiglio, I'm a software developer, and I love building things for the
-        web.
+        Hello I'm Andrew Vittiglio, I'm a founder, entrepreneur, and software developer.
       </h1>
       <div className="relative z-10 flex h-[calc(100vh-81px)] items-center md:h-[calc(100vh-116px)]">
         <div className="mx-auto w-screen max-w-3xl px-4 sm:px-9 xl:max-w-5xl xl:px-0">
@@ -35,8 +84,11 @@ export default function Hero(): ReactElement {
               <h1 className="text-5xl font-semibold sm:text-7xl md:text-8xl xl:text-9xl">
                 Andrew Vittiglio
               </h1>
-              <h2 className="text-3xl font-medium opacity-80 sm:text-6xl md:text-6xl xl:text-7xl">
-                I build things for the web.
+              <h2
+                ref={textRef}
+                className="text-2xl font-medium opacity-80 sm:text-xl md:text-3xl xl:text-5xl"
+              >
+                I love building things.
               </h2>
               <Link
                 href="/about"
