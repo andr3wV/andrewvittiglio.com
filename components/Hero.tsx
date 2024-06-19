@@ -75,7 +75,7 @@ export default function Hero(): ReactElement {
   return (
     <div>
       <h1 className="sr-only">
-        Hello I'm Andrew Vittiglio, I'm a founder, entrepreneur, and software developer.
+        Hello I'm Andrew Vittiglio, I'm a full-stack software engineer, entrepreneur, and founder.
       </h1>
       <div className="relative z-10 flex h-[calc(100vh-81px)] items-center md:h-[calc(100vh-116px)]">
         <div className="mx-auto w-screen max-w-3xl px-4 sm:px-9 xl:max-w-5xl xl:px-0">

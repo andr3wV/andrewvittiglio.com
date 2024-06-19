@@ -17,7 +17,7 @@ export default function Page() {
     <ScrollProvider>
       <Hero />
       <Intro />
-      <Works />
+      <Works progress={0}/>
       {/* <SectionContainer>
         <RecentPosts posts={posts} />
         <Suspense fallback="loading..">

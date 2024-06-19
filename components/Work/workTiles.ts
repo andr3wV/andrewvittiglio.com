@@ -6,7 +6,8 @@ export type WorkTile = {
     width: number;
     height: number;
   };
-  href?: string;
+  grid?: string[];
+  resume?: string;
 };
 
 export const workTiles: WorkTile[] = [
@@ -14,10 +15,19 @@ export const workTiles: WorkTile[] = [
     description: `Here are places`,
     title: `I've Worked`,
     image: {
-      src: '/static/images/aphex-apps.webp',
+      src: '/static/images/work2.jpg',
       width: 600,
       height: 770,
     },
+    grid: [
+      '/static/images/work1.png',
+      '/static/images/work2.png',
+      '/static/images/work3.png',
+      '/static/images/work4.png',
+      '/static/images/work5.jpeg',
+      '/static/images/work6.jpeg',
+      '/static/images/work7.jpg',
+    ],
   },
   {
     description: 'And some of the',
@@ -36,7 +46,7 @@ export const workTiles: WorkTile[] = [
       width: 1300,
       height: 1500,
     },
-    href: 'https://drive.google.com/file/d/1KzwrLxIH8tzbU4kB_IvQhZT3h1z5scM5/view?usp=sharing',
+    resume: 'www.google.com',
   },
   {
     description: `I'm looking for work & projects!`,

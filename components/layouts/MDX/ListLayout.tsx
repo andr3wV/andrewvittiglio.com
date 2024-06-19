@@ -1,10 +1,10 @@
 'use client';
 
 import Pagination from '@/components/Pagination';
-import PageTitle from '@/components/PageTitle';
 import { CoreContent } from '@/lib/utils/contentlayer';
 import type { Blog } from 'contentlayer/generated';
 import { ComponentProps, useState } from 'react';
+import Script from 'next/script';
 
 interface Props {
   posts: CoreContent<Blog>[];
@@ -44,12 +44,33 @@ export default function ListLayout({ title, pagination }: Props) {
             />
           </svg>
         </div>
-        <PageTitle>
-          Under Construction{' '}
-          <span role="img" aria-label="roadwork sign">
-            🚧
-          </span>
-        </PageTitle>
+        <blockquote className="twitter-tweet">
+          <p lang="en" dir="ltr">
+            Why I hate Agile, a short 🧵
+          </p>
+          &mdash; Andrew (@avittig){' '}
+          <a href="https://twitter.com/avittig/status/1775303347198959901?ref_src=twsrc%5Etfw">
+            April 2, 2024
+          </a>
+        </blockquote>
+        <blockquote className="twitter-tweet">
+          <p lang="en" dir="ltr">
+            I know{' '}
+            <a href="https://twitter.com/hashtag/ChatGPT4?src=hash&amp;ref_src=twsrc%5Etfw">
+              #ChatGPT4
+            </a>{' '}
+            was an unnecessary gift to all us developers, but I'm really disappointed with how badly
+            badly it now performs on programming tasks. <br />
+            <br />
+            Even simple things, like how to add a new line in an HTML fails miserably. Pretty sad, I
+            sad, I miss the May 2023 days😓
+          </p>
+          &mdash; Andrew (@avittig){' '}
+          <a href="https://twitter.com/avittig/status/1771665007454916941?ref_src=twsrc%5Etfw">
+            March 23, 2024
+          </a>
+        </blockquote>
+        <Script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></Script>
       </div>
       {pagination && pagination.totalPages > 1 && !searchValue && (
         <Pagination currentPage={pagination.currentPage} totalPages={pagination.totalPages} />
