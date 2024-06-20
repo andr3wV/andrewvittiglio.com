@@ -73,7 +73,7 @@ export default function Hero(): ReactElement {
   }, [charIndex, index, isDeleting, texts]);
 
   return (
-    <div>
+    <div className="dark:bg-black dark:text-white bg-white text-black">
       <h1 className="sr-only">
         Hello I'm Andrew Vittiglio, I'm a full-stack software engineer, entrepreneur, and founder.
       </h1>

@@ -7,7 +7,7 @@
     "build": "next build",
     "postbuild": "npm run rss",
     "rss": "cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/generate-rss.mjs",
-    "serve": "next start",
+    "start": "next start",
     "lint": "next lint --fix --dir pages --dir components --dir lib --dir layouts --dir scripts",
     "prepare": "husky install"
   },
