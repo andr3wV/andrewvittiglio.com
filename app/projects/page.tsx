@@ -14,7 +14,7 @@ export default function Page() {
           Projects
         </h1>
         <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-          Here are some of my selected personal projects worth sharing.
+          Here are some of my selected personal projects and papers worth sharing.
         </p>
       </div>
       <Projects />

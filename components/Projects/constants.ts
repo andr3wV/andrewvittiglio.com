@@ -2,17 +2,17 @@ import { Project } from './types';
 
 export const projects: Project[] = [
   {
+    title: "Latencies in HFT",
+    src: "latency-paper.png",
+    color: "#7e62cf",
+    url: "https://drive.google.com/file/d/1wd_PNHas2iwDS4zRfT3OTdFpDmp1J2Rn/view",
+    role: "Author",
+  },
+  {
     title: 'Go Stock Exchange',
     src: 'exchange.svg',
     color: '#dbeafe',
     url: 'https://github.com/andr3wV/Exchange/',
-    role: 'Backend Developer',
-  },
-  {
-    title: 'CFG to PDA Converter',
-    src: 'CFGtoPDA.svg',
-    color: '#ddd6fe',
-    url: 'https://github.com/andr3wV/CFGtoPDA',
     role: 'Backend Developer',
   },
   {
@@ -23,11 +23,18 @@ export const projects: Project[] = [
     role: 'Fullstack Developer',
   },
   {
-    title: 'Personal Website',
-    src: 'andrewvittiglio.com.svg',
-    color: '#fee2e2',
-    url: 'https://github.com/andr3wV/andrewvittiglio.com',
-    role: 'Fullstack Developer',
+    title: `1980's Chilean Financial Crisis`,
+    src: 'chile-paper.png',
+    color: '#f7fafc',
+    url: 'https://drive.google.com/file/d/1fSdtHhiCz4e-NiK_4Esh_SzNdYwf49Zk/view',
+    role: 'Author',
+  },
+  {
+    title: 'CFG to PDA Converter',
+    src: 'CFGtoPDA.svg',
+    color: '#ddd6fe',
+    url: 'https://github.com/andr3wV/CFGtoPDA',
+    role: 'Backend Developer',
   },
   {
     title: 'Distributed Key Value Store',
@@ -44,14 +51,14 @@ export const projects: Project[] = [
     role: 'Backend Developer',
   },
   {
-    title: 'Wander (Deprecated)',
+    title: 'Wander',
     src: 'wander.png',
     color: '#ffedd5',
     url: 'https://github.com/andr3wV/Wander',
     role: 'Project Leader and Backend Developer',
   },
   {
-    title: 'SummyGPT (Deprecated)',
+    title: 'SummyGPT',
     src: 'summy.png',
     color: '#ecfccb',
     url: 'https://github.com/andr3wV/Summy',
