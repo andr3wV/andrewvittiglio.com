@@ -2,6 +2,13 @@ import { Project } from './types';
 
 export const projects: Project[] = [
   {
+    title: "Chess Transformer",
+    src: "ChessTransformer.svg",
+    color: "#f7fafc",
+    url: "https://github.com/andr3wV/ChessTransformer",
+    role: "Backend Developer",
+  },
+  {
     title: "Latencies in HFT",
     src: "latency-paper.png",
     color: "#7e62cf",
