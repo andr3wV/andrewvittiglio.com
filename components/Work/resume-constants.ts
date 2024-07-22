@@ -5,7 +5,7 @@ export const resume: Project[] = [
     title: 'Download',
     src: 'resume.png',
     color: '#dbeafe',
-    url: 'https://drive.google.com/file/d/1--WE0gKBN4FvyraN1Lg3I0JFF6eCHvlE/view?usp=sharing',
+    url: 'https://drive.google.com/file/d/1lFjmy5VwPaZku1RwiKEw2ITkDkQWZc2p/view',
     role: 'Updated June 19th, 2024',
   }
 ]

@@ -31,7 +31,7 @@ const workTiles: WorkTile[] = [
       width: 1300,
       height: 1500,
     },
-    resume: 'www.google.com',
+    resume: 'https://drive.google.com/file/d/1lFjmy5VwPaZku1RwiKEw2ITkDkQWZc2p/view?usp=sharing',
   },
   {
     description: `Some of my`,
