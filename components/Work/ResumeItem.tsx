@@ -1,4 +1,5 @@
 import { ProjectModal } from '../Projects//types';
+import Image from 'next/image';
 
 interface ProjectProps {
   index: number;
@@ -8,7 +9,7 @@ interface ProjectProps {
   setModal: (modal: ProjectModal) => void;
 }
 
-export default function ResumeItem({ index, title, url, setModal }: ProjectProps) {
+export default function ResumeItem({ index, url, setModal }: ProjectProps) {
   return (
     <a
       href={url}
@@ -19,11 +20,17 @@ export default function ResumeItem({ index, title, url, setModal }: ProjectProps
       onMouseLeave={() => {
         setModal({ active: false, index });
       }}
-      className="group flex w-full items-center justify-between border-b px-4 sm:px-10 sm:py-8"
+      className="group flex w-full items-center justify-center"
     >
-      <h2 className="text-2xl transition-all group-hover:-translate-x-3 group-hover:scale-110 text-black sm:text-6xl items-center justify-center align-middle">
-        {title}
-      </h2>
+      <div className="transition-all group-hover:scale-105">
+        <Image 
+          src="/static/images/project/resume.png" 
+          alt="Resume" 
+          width={550} 
+          height={500} 
+          className="cursor-pointer"
+        />
+      </div>
     </a>
   );
 }

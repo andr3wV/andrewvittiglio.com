@@ -24,7 +24,7 @@ export type WorkTile = {
 
 const workTiles: WorkTile[] = [
   {
-    description: ``,
+    description: `Check Out`,
     title: 'My Resume',
     image: {
       src: '/static/images/resume.png',
