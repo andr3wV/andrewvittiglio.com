@@ -1,43 +1,54 @@
-import { getTopTracks } from '@/lib/spotify';
-import Track from './Track';
-import { Song, TrackInfo } from './types';
+import Track from "./Track"
+import type { Song } from "./types"
 
-async function fetchTopTracks(): Promise<Song[] | null> {
-  try {
-    const response = await getTopTracks();
-    const { items } = await response.json();
+const topTracks: Song[] = [
+  {
+    artist: "DJ Leftover Sushi",
+    songUrl: "https://youtu.be/dQw4w9WgXcQ?si=RfcDcxh4b8kE1er3",
+    title: "I Probably Shouldn't Have Eaten That",
+  },
+  {
+    artist: "The Venmo Requests",
+    songUrl: "https://youtu.be/dQw4w9WgXcQ?si=RfcDcxh4b8kE1er3",
+    title: "Everyone Owes Me $50",
+  },
+  {
+    artist: "The Group Chat Historians",
+    songUrl: "https://youtu.be/dQw4w9WgXcQ?si=RfcDcxh4b8kE1er3",
+    title: "Remember When You Said That?",
+  },
+  {
+    artist: "DJ Overdraft",
+    songUrl: "https://youtu.be/dQw4w9WgXcQ?si=RfcDcxh4b8kE1er3",
+    title: "Drinks Were on Me (But They Shouldn’t Have Been)",
+  },
+  {
+    artist: "Missing AirPods",
+    songUrl: "https://youtu.be/dQw4w9WgXcQ?si=RfcDcxh4b8kE1er3",
+    title: "Check Find My One More Time",
+  },
+  {
+    artist: "Processing Refund",
+    songUrl: "https://youtu.be/dQw4w9WgXcQ?si=RfcDcxh4b8kE1er3",
+    title: "3 Month 7-10 Business Days",
+  },
+  {
+    artist: "Horizontal Shower",
+    songUrl: "https://youtu.be/dQw4w9WgXcQ?si=RfcDcxh4b8kE1er3",
+    title: "I’ll Just Lay Here",
+  },
+]
 
-    const tracks = items.slice(0, 5).map((track: TrackInfo) => ({
-      artist: track.artists.map((_artist) => _artist.name).join(', '),
-      songUrl: track.external_urls.spotify,
-      title: track.name,
-    }));
-
-    return tracks;
-  } catch (e) {
-    if (e instanceof Error) {
-      console.error(e.message);
-    }
-  }
-
-  return null;
-}
-
-export default async function TopTracks() {
-  const topTracks = await fetchTopTracks();
-
-  if (!topTracks) {
-    return null;
-  }
-
+export default function TopTracks() {
   return (
-    <div className="py-7">
-      <h1 className="text-2xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-3xl sm:leading-10 md:text-4xl md:leading-14">
-        My <span className="text-green-700 dark:text-green-500">Spotify</span> Top Songs
-      </h1>
+    <section className="py-7">
+      <p className="text-2xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100">
+        Spotify Top Songs
+      </p>
       {topTracks.map((track, index) => (
         <Track ranking={index + 1} key={track.songUrl} track={track} />
       ))}
-    </div>
-  );
+    </section>
+  )
 }
+

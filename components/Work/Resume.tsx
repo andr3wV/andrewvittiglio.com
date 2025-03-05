@@ -15,8 +15,7 @@ export default function Resume() {
   const [modal, setModal] = useState<ProjectModal>({ active: false, index: 0 });
 
   return (
-    <>
-      <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className="w-full h-full py-4 px-2 sm:py-6 sm:px-4">
         {resume.map((project, index) => (
           <motion.div
             key={project.title}
@@ -48,8 +47,7 @@ export default function Resume() {
             </a>
           </motion.div>
         ))}
-      </div>
       {breakpoint === 'desktop' && <ProjectPreview modal={modal} projects={resume} />}
-    </>
+    </div>
   );
 }

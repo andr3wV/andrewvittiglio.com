@@ -1,50 +1,46 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import Image from "next/image"
+import { motion } from "framer-motion"
 
-const images = [
-  { src: "/static/images/work1.png", alt: "Work 1", width: 600, height: 600, top: '0%', left: '-10%', mobileTop: '-5%', mobileLeft: '5%' },
-  { src: "/static/images/work2.png", alt: "Work 2", width: 600, height: 600, top: '5%', left: '-40%', mobileTop: '-3%', mobileLeft: '30%' },
-  { src: "/static/images/work3.png", alt: "Work 3", width: 180, height: 180, top: '45%', left: '35%', mobileTop: '20%', mobileLeft: '0%' },
-  { src: "/static/images/work4.png", alt: "Work 4", width: 220, height: 220, top: '50%', left: '-30%', mobileTop: '40%', mobileLeft: '5%' },
-  { src: "/static/images/work5.jpeg", alt: "Work 5", width: 160, height: 160, top: '25%', left: '90%', mobileTop: '5%', mobileLeft: '0%' },
-  { src: "/static/images/work6.jpeg", alt: "Work 6", width: 200, height: 200, top: '50%', left: '85%', mobileTop: '20%', mobileLeft: '60%' },
-  { src: "/static/images/work7.jpg", alt: "Work 7", width: 140, height: 140, top: '70%', left: '40%', mobileTop: '40%', mobileLeft: '60%' },
-];
+const workExperiences = [
+  { src: "/static/images/work1.png", alt: "Work 1", width: 600, height: 600 },
+  { src: "/static/images/work2.png", alt: "Work 2", width: 600, height: 600 },
+  { src: "/static/images/work3.png", alt: "Work 3", width: 180, height: 180 },
+  { src: "/static/images/work4.png", alt: "Work 4", width: 220, height: 220 },
+  { src: "/static/images/work5.jpeg", alt: "Work 5", width: 160, height: 160 },
+  { src: "/static/images/work6.jpeg", alt: "Work 6", width: 200, height: 200 },
+  { src: "/static/images/work7.jpg", alt: "Work 7", width: 140, height: 140 },
+]
 
 export default function WorkCollage() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Tailwind's md breakpoint
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
-    <div className="relative w-full h-screen">
-      {images.map((image, index) => (
-        <div
-          key={index}
-          className="absolute transition-transform duration-300 hover:scale-105 hover:brightness-110"
-          style={{
-            top: isMobile ? image.mobileTop : image.top,
-            left: isMobile ? image.mobileLeft : image.left,
-            width: isMobile ? `${image.width / 2}px` : `${image.width}px`,
-            height: isMobile ? `${image.height / 2}px` : `${image.height}px`,
-          }}
-        >
-          <Image src={image.src} alt={image.alt} width={image.width} height={image.height} className="rounded-lg" />
-        </div>
-      ))}
+    <div className="w-full h-full py-4 px-2 sm:py-6 sm:px-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4">
+      {workExperiences.map((work, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="flex flex-col items-center"
+          >
+            <div className="bg-white rounded-lg shadow-md p-2 sm:p-3 w-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+              <div className="relative w-full h-28 sm:h-32 md:h-36 flex items-center justify-center">
+                <Image
+                  src={work.src || "/placeholder.svg"}
+                  alt={work.alt}
+                  width={work.width}
+                  height={work.height}
+                  className="object-contain max-h-full max-w-full rounded-md"
+                  style={{ width: "auto", height: "auto" }}
+                />
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </div>
-  );
+  )
 }
+
