@@ -3,11 +3,6 @@ import type { Song } from "./types"
 
 const topTracks: Song[] = [
   {
-    artist: "DJ Leftover Sushi",
-    songUrl: "https://youtu.be/dQw4w9WgXcQ?si=RfcDcxh4b8kE1er3",
-    title: "I Probably Shouldn't Have Eaten That",
-  },
-  {
     artist: "The Venmo Requests",
     songUrl: "https://youtu.be/dQw4w9WgXcQ?si=RfcDcxh4b8kE1er3",
     title: "Everyone Owes Me $50",
