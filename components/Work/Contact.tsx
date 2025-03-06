@@ -26,7 +26,7 @@ export default function Contact() {
     },
     {
       name: "Email",
-      url: "mailto:avittig2@nd.edu",
+      url: "mailto:andrewv433@gmail.com",
       icon: <Mail className="h-6 w-6 sm:h-7 sm:w-7" />,
       color: "hover:text-red-500",
     },

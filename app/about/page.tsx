@@ -1,5 +1,5 @@
 import { MDXLayoutRenderer } from '@/components/MDXComponents';
-import TopTracks from '@/components/Spotify/TopTracks';
+// import TopTracks from '@/components/Spotify/TopTracks';
 import AuthorLayout from '@/layouts/MDX/AuthorLayout';
 import MainLayout from '@/layouts/MainLayout';
 import { allAuthors } from 'contentlayer/generated';
@@ -20,7 +20,7 @@ export default function About() {
     <MainLayout>
       <AuthorLayout content={author}>
         <MDXLayoutRenderer content={author} />
-        <TopTracks />
+        {/* <TopTracks /> */}
       </AuthorLayout>
     </MainLayout>
   );
