@@ -61,13 +61,20 @@ export const MaskContainer = ({
       }}
     >
       <motion.div
-        className="absolute flex h-full w-full items-center justify-center bg-white text-6xl [mask-image:url(/mask.svg)] [mask-repeat:no-repeat] [mask-size:40px] dark:bg-black"
-        animate={{
-          WebkitMaskPosition:
+        className="absolute flex h-full w-full items-center justify-center bg-white text-6xl mask-[url(/mask.svg)] mask-no-repeat dark:bg-black"
+        style={{
+          maskSize: `${maskSize}px`,
+          maskPosition:
             mousePosition.x !== null && mousePosition.y !== null
               ? `${mousePosition.x - maskSize / 2}px ${mousePosition.y - maskSize / 2}px`
               : '0px 0px',
-          WebkitMaskSize: `${maskSize}px`,
+        }}
+        animate={{
+          maskSize: `${maskSize}px`,
+          maskPosition:
+            mousePosition.x !== null && mousePosition.y !== null
+              ? `${mousePosition.x - maskSize / 2}px ${mousePosition.y - maskSize / 2}px`
+              : '0px 0px',
         }}
         transition={{
           maskSize: { duration: 0.3, ease: 'easeInOut' },
