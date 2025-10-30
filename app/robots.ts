@@ -1,4 +1,3 @@
-import siteMetadata from 'content/siteMetadata';
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
@@ -7,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: `${siteMetadata.siteUrl}/sitemap.xml`,
-    host: siteMetadata.siteUrl,
+    sitemap: `https://andrewvittiglio.com/sitemap.xml`,
+    host: `https://andrewvittiglio.com`,
   };
 }

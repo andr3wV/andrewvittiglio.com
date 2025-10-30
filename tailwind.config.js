@@ -1,9 +1,14 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-const colors = require('tailwindcss/colors')
+import colors from 'tailwindcss/colors';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 module.exports = {
   mode: 'jit',
-  content: ['./pages/**/*.tsx', './components/**/*.tsx', './layouts/**/*.tsx', './lib/**/*.ts'],
+  content: [
+    './app/**/*.tsx',
+    './components/**/*.tsx',
+    './layouts/**/*.tsx',
+    './lib/**/*.ts',
+  ],
   darkMode: 'class',
   theme: {
     extend: {
@@ -26,7 +31,7 @@ module.exports = {
         '8.5xl': '7rem',
       },
       fontFamily: {
-        sans: ['Mukta', ...defaultTheme.fontFamily.sans],
+        sans: [...defaultTheme.fontFamily.sans],
       },
       gradientColorStops: {
         'gradient-1-start': '#F20089',
@@ -223,9 +228,4 @@ module.exports = {
       }),
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-    require('tailwind-scrollbar')({ nocompatible: true }),
-  ],
-}
+};

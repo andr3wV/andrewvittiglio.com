@@ -1,18 +1,17 @@
-import siteMetadata from 'content/siteMetadata';
-import { allBlogs } from 'contentlayer/generated';
-import { MetadataRoute } from 'next';
+import { getPosts } from './thoughts/utils';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = siteMetadata.siteUrl;
-  const blogRoutes = allBlogs.map((post) => ({
-    url: `${siteUrl}/${post.slug}`,
-    lastModified: post.lastmod || post.date,
+export const baseUrl = 'https://andrewvittiglio.com';
+
+export default async function sitemap() {
+  const blogs = getPosts().map((post) => ({
+    url: `${baseUrl}/thoughts/${post.slug}`,
+    lastModified: post.metadata.publishedAt,
   }));
 
-  const routes = ['', 'blog', 'projects', 'tags', 'about', 'uses'].map((route) => ({
-    url: `${siteUrl}/${route}`,
+  const routes = ['', 'blog', 'projects', 'about', 'uses'].map((route) => ({
+    url: `${baseUrl}/${route}`,
     lastModified: new Date().toISOString().split('T')[0],
   }));
 
-  return [...routes, ...blogRoutes];
+  return [...routes, ...blogs];
 }
