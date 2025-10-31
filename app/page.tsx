@@ -21,11 +21,11 @@ export default function Home() {
         )}
       >
         <div className="max-w-5xl flex flex-col space-y-4 px-8 md:px-24 text-shadow-lg lg:ml-14">
-          <h1 className="font-serif text-4xl font-medium md:mr-4 md:text-6xl">
+          <h1 className="font-serif text-4xl font-bold md:mr-4 md:text-6xl">
             <span className="font-bold">Andrew Vittiglio</span>
           </h1>
           <section className="relative z-10">
-            <p className="text-base text-justify">
+            <p className="text-base text-justify font-semibold">
               My goal is to develop scalable and robust software to connect
               people and help people. I&apos;m most experienced in building
               financial infrastructure, but I also deeply interested in
@@ -51,7 +51,7 @@ export default function Home() {
           </section>
           <section className="relative z-10 flex space-x-4 items-center text-sm">
             <div>
-              <p>Connect with me: </p>
+              <p className="font-semibold">Connect with me: </p>
               <div className="flex -ml-2">
                 <Link
                   href="https://www.linkedin.com/in/andr3wV/"
@@ -88,9 +88,15 @@ export default function Home() {
             </div>
             <div className="h-14 border-l border-gray-300" />
             <div className="flex flex-wrap space-x-3 space-y-1">
-              <Link href="/projects">/projects</Link>
-              <Link href="/stats">/stats</Link>
-              <Link href="/thoughts">/thoughts</Link>
+              <Link href="/projects" className="font-semibold">
+                /projects
+              </Link>
+              <Link href="/stats" className="font-semibold">
+                /stats
+              </Link>
+              <Link href="/thoughts" className="font-semibold">
+                /thoughts
+              </Link>
             </div>
           </section>
         </div>
