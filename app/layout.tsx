@@ -8,11 +8,11 @@ import './tailwind.css';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Abhishek Tripathi Kuberji',
-    default: 'Abhishek Tripathi Kuberji',
+    template: '%s | Andrew Vittiglio',
+    default: 'Andrew Vittiglio',
   },
   description: 'Software Engineer and forever a student of the craft.',
-  metadataBase: new URL('https://abhishektripathi.com'),
+  metadataBase: new URL('https://andrewvittiglio.com'),
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },

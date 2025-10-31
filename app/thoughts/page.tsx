@@ -3,7 +3,7 @@ import PageContainer from '../components/layouts/page-container';
 
 export const metadata = {
   title: 'Thoughts',
-  description: 'My Thoughts - Abhishek Tripathi',
+  description: 'My Thoughts - Andrew Vittiglio',
 };
 
 export default function ThoughtsPage() {

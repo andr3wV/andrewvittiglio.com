@@ -7,7 +7,7 @@ import TopTracks from '../components/spotify/top-tracks';
 
 export const metadata = {
   title: 'Stats',
-  description: 'My Stats - Abhishek Tripathi',
+  description: 'My Stats - Andrew Vittiglio',
 };
 
 export default function StatsPage() {
