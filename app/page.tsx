@@ -26,13 +26,13 @@ export default function Home() {
           </h1>
           <section className="relative z-10">
             <p className="text-base text-justify font-semibold">
-              My goal is to develop scalable and robust software to connect
-              people and help people. I&apos;m most experienced in building
-              financial infrastructure, but I also deeply interested in
-              artificial intelligence, quantitative trading, and automation.
+              Right now, I&apos;m deep in provenance work building systems that
+              track the origin and authenticity of digital media through
+              cryptography. I typically bounce around between deep dives into
+              cryptography, AI, web dev, or algorithmic trading.
               <br />
-              <br />I graduated university in May 2025 with degrees in Computer
-              Science and Economics. While in college, I co-founded{' '}
+              <br />
+              During college, I co-founded{' '}
               <Link
                 href="https://cr3markets.com"
                 target="_blank"
@@ -41,12 +41,15 @@ export default function Home() {
               >
                 CR3 Markets
               </Link>{' '}
-              a public marketplace for fractionalized commercial real estate.
-              Since then, I&apos;ve helped a number of pre-revenue startups
-              design their system architecture, prototype MVPs, and streamline
-              deployments. In my free time, I play chess, workout, travel, and
-              watch Boston sports! Feel free to reach out if you want to talk
-              tech!
+              to explore how blockchain and securitization software could change
+              commercial real estate investment. Since graduating with degrees
+              in Computer Science and Economics, I&apos;ve helped startups turn
+              ideas into production systems, from initial prototypes to scalable
+              deployments.
+              <br />
+              <br />
+              Outside of work, I play chess, workout, travel, and watch Boston
+              sports! Feel free to reach out if you want to chat!
             </p>
           </section>
           <section className="relative z-10 flex space-x-4 items-center text-sm">
@@ -96,6 +99,14 @@ export default function Home() {
               </Link>
               <Link href="/thoughts" className="font-semibold">
                 /thoughts
+              </Link>
+              <Link
+                href="https://drive.google.com/file/d/1KzwrLxIH8tzbU4kB_IvQhZT3h1z5scM5/view?usp=sharing"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold"
+              >
+                /resume
               </Link>
             </div>
           </section>
