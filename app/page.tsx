@@ -26,10 +26,10 @@ export default function Home() {
           </h1>
           <section className="relative z-10">
             <p className="text-base text-justify font-semibold">
-              Right now, I&apos;m deep in provenance work building systems that
-              track the origin and authenticity of digital media through
-              cryptography. I typically bounce around between deep dives into
-              cryptography, AI, web dev, or algorithmic trading.
+              Right now, I&apos;m working on systems that cryptographically
+              track the origin and authenticity of digital media. I typically
+              bounce around between deep dives into cryptography, AI, web dev,
+              or algorithmic trading.
               <br />
               <br />
               During college, I co-founded{' '}

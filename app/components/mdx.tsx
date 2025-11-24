@@ -65,7 +65,7 @@ export const components = {
   ),
   p: ({ children, ...props }: ParagraphProps) => (
     <p
-      className="leading-snug text-gray-900 dark:text-gray-100 py-4"
+      className="leading-snug text-base md:text-lg text-gray-900 dark:text-gray-100 py-4"
       {...props}
     >
       {children}

@@ -1,40 +1,40 @@
 ---
 title: The "Good Enough" Lie in Engineering
 publishedAt: 2024-11-24
-summary: Why "perfect is the enemy of good" has become a dangerous excuse for accepting broken systems instead of actually good ones.
+summary: Why "perfect is the enemy of good" has become a dangerous excuse for shipping systems that fail at their core purpose.
 draft: false
 ---
 
-I've spent the last six months building dev tools for [C2PA](https://c2pa.org), a specification for embedding provenance metadata into digital media. [Que](https://addque.org) is a project I've been working on to make C2PA implementations easier, which means I've had a front-row seat to the standard's evolution. In that time, a concerning pattern has emerged: when you point out a flaw, a gap, or a design decision that undermines the system's security guarantees, someone occasionally chimes in with a familiar refrain: _"Well, perfect is the enemy of the good."_
+A [forensic analysis](https://www.hackerfactor.com/blog/index.php?/archives/1080-C2PA-in-a-Court-of-Law.html) of C2PA-signed photos from the Google Pixel 10 was recently published finding inconsistent timestamps and metadata that can be undetectably changed. When I filed a bug bounty report to Google based on these issues, their response was _"We have logged this issue for potential remediation in a future version."_
 
-It's not ubiquitous, but it's persistent enough to be troubling.
+In other words, _"What we have now is good enough, but we'll take a look later."_
 
-## What C2PA Is and Why This Phrase is Everywhere
+I've spent the last six months building dev tools for [C2PA](https://c2pa.org), and I've watched this pattern repeat across the ecosystem. The aphorism "perfect is the enemy of good" has become a conversational cheat code that morphed engineering rigor into obstructionism, framing the critic as an idealist and the defender as a pragmatist. But after seeing it used to dismiss security failures, I've come to a different conclusion: **Perfect isn't the enemy of good. "Good enough" is the enemy of "actually good."**
 
-For those who are unaware, C2PA is an attempt to combat digital misinformation by cryptographically signing media metadata. The promise is compelling: any media file could carry an unforgeable chain of custody from camera shutter to social media feed ("glass to glass" security as cryptographer [Dan Boneh](https://en.wikipedia.org/wiki/Dan_Boneh) coined). In theory, you'd know the origin of content and how it was modified along the way.
+### C2PA's Flawed Foundation
 
-The [specification](https://spec.c2pa.org/specifications/specifications/2.2/index.html) is complex. It uses X.509 certificates, deeply nested manifests embedded in file formats, and a trust model that relies on a federated registry of entities. For most software engineers who aren't security experts, this complexity is a significant barrier (which is exactly why [Que](https://addque.org) exists). On paper, it's sophisticated. In practice, it's a house of cards.
+C2PA is an attempt to take on digital misinformation by cryptographically signing media metadata. The promise is compelling: any media file could carry an unforgeable chain of custody from camera shutter to social media feed ("glass to glass" security). In theory, you'd know the origin of content and how it was modified along the way.
 
-The problem is that **C2PA has a lot of flaws**. Not minor edge cases, but fundamental problems that people like [HackerFactor have been documenting extensively](https://www.hackerfactor.com/blog). Every time someone points out that the foundation is cracked, the response isn't "let's fix the foundation." It's "perfect is the enemy of the good." I've heard it during working group meetings, from product managers at Adobe, and even in GitHub issues.
+The [specification](https://spec.c2pa.org/specifications/specifications/2.2/index.html) is admittedly complex: X.509 certificate chains, nested manifests embedded in file formats, and a federated trust registry. For most engineers who aren't security experts, this is a significant barrier (which is exactly why we're building [Que](https://addque.org)).
 
-At first, I nodded along. It's a classic aphorism, a reminder not to let idealism block progress. But after hearing it used as a shield turning legitimate criticism into petulant perfectionism, I've come to a different conclusion: **Perfect isn't the enemy of good. "Good enough" is the enemy of "actually good."**
+As we would expect from a protocol still finding its footing, C2PA has flaws. The problem isn't the flaws themselves, it's how we respond to them. When someone points out that the foundation is cracked, the response shouldn't be _"well, you can't always be perfect"_ as a shield against criticism. The response should be _"let's fix the foundation."_
 
-The core issue is that the expression implies a false binary. It suggests that _any_ solution is inherently "good," and that critics are merely chasing an impossible ideal.
+### The Spectrum of "Good"
 
-But "good" isn't a boolean attribute. It exists on a spectrum.
+"Perfect is the enemy of good" implies a false binary: either you're chasing perfection or you're being practical. But "good" exists on a spectrum with clear thresholds. When [Voltaire coined the phrase](https://en.wikipedia.org/wiki/Perfect_is_the_enemy_of_good), he was warning against letting the unattainable prevent the achievable. He wasn't arguing we should accept solutions that fail at their primary purpose.
 
-When Voltaire [coined the phrase](https://en.wikipedia.org/wiki/Perfect_is_the_enemy_of_good), he was warning against letting the unattainable prevent the achievable. He wasn't arguing that we should accept solutions that fail at their primary purpose. A better framing would be: **"The pursuit of perfect is the enemy of a sufficiently good-enough solution."**
+A better framing: **"The pursuit of perfect is the enemy of a sufficiently good-enough solution."** The key word here is _sufficiently_.
 
-The key word is _sufficiently_.
+In engineering, we make tradeoffs daily. A release that doesn't have all features is imperfect but good. A security protocol that fails under certain attack vectors is not "good enough." It's fundamentally broken.
 
-In engineering, there is a hard line where a solution stops being "good but imperfect" and starts being "useless." A bridge that can support 95% of expected traffic is imperfect but good. A bridge that collapses under its own weight is not "good enough", it is a liability.
+The difference is whether the imperfection undermines the core value proposition. C2PA's value proposition is _trust_. When a system designed to establish trust is inconsistent or circumventable, it doesn't just fall short of perfect. It actively harms users by creating a false sense of security.
 
-Yet "perfect is the enemy of good" is often used to blur this line. It attempts to categorize sufficiency failures as imperfection. When a system fails to deliver on its core value proposition, it isn't "good." It’s broken. And pointing out that something is broken isn't perfectionism; it is the bare minimum requirement of engineering.
+### A Culture of Defensive Pragmatism
 
-## A Culture of "Good Enough" is Failing Us
+This pattern extends far beyond C2PA. Across engineering projects, "perfect is the enemy of good" has become a shield for shipping systems that fail at their core purpose. We see it when MVPs built as prototypes become permanent production systems. When security audits are skipped because "we'll add it in v2." When technical debt is framed as "iterative development" rather than deferred disaster.
 
-The phrase has been weaponized to lower the bar so far that "exists" becomes the new definition of "good." It has become a conversational cheat code across tech culture that transforms engineering rigor into obstructionism, framing the critic as an idealist and the defender as a pragmatist. On many issues, we have effectively shut down necessary debate about quality and safety.
+This matters because "perfect is the enemy of good" has been weaponized to lower the bar to a floor where "exists" is now the new definition of "good." It has effectively shut down debate about quality and safety, and when we defend broken systems with aphorisms instead of fixes, we're not being pragmatic. We're being irresponsible. When a payment system occasionally loses transactions, that's not "good enough." When a medical device firmware has known race conditions, that's not "good enough." When an authentication library can be bypassed, that's not "good enough."
 
-When we defend broken systems with aphorisms instead of fixes, we're not being pragmatic. We're being irresponsible. **"Good enough" has become the enemy of "actually good," and the cost is measured in the degradation of trust and real-world harm.**
+Instead of fearing perfectionism, we should aspire to it. Not by building flawless systems, but by refusing to accept ones that fail at their job. Pointing out that something is broken isn't perfectionism, it's the bare minimum requirement of engineering.
 
-I don't need C2PA (or any software) to be perfect. I need it to be _good enough_ to trust. I need it to be better than nothing, and in many cases, it isn't. Instead of reaching for Voltaire, we should be reaching for our keyboards, opening an IDE, and actually try fixing the problems. Because in engineering "good enough" isn't good enough, and pretending otherwise helps no one.
+I don't need any software to be perfect. I need it to be better than nothing, and in many cases, it isn't. Instead of reaching for Voltaire, we should be reaching for our keyboards, opening an IDE, and actually fixing the problems. Because in engineering, "good enough" isn't good enough, and pretending otherwise helps no one.
