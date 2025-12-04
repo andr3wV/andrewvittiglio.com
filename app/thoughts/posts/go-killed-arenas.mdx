@@ -1,0 +1,107 @@
+---
+title: Golang's Big Miss on Memory Arenas
+publishedAt: 2025-12-03
+summary: Go lives in the middle ground between speed and simplicity but by killing Memory Arenas, it may have capped its future and risked losing that middle entirely.
+draft: false
+---
+
+<img src="/static/blog/dead-gopher.png" alt="dead-gopher" width="400" />
+
+When your software team needs to pick a language today, you typically weigh two factors: **language performance** and **developer velocity**.
+
+If you choose lower-level languages like Rust, your team will spend weeks fighting the borrow checker, asynchronicity, and difficult syntax. If you choose TypeScript or Python, you'll hit a performance wall the moment you venture outside of web apps, CRUD servers, and modeling.
+
+The beauty of Go is that it lives in between these extremes. It isn't the fastest, but it's fast enough for most use cases. It isn't the easiest to write, but it's (almost boringly) consistent. This is why so much infrastructure is written in Go. Teams get predictable performance without sacrificing approachability.
+
+Yet Go is often cited as proof you can have it all. [esbuild](https://github.com/evanw/esbuild/), a JS bundler that reshaped performance expectations for an entire industry, is held up as evidence that Go can be _extremely_ fast.
+
+But there's a catch. Go’s “middle ground” has limits.
+
+esbuild's author, Evan Wallace, wrote Go for the bundler like a virtuoso. In the hottest parts, the code starts looking more like a hand‑tuned C program: the [tokenizer's hot loop](https://github.com/evanw/esbuild/blob/main/internal/js_lexer/js_lexer.go) barely allocates, symbols live in [dense integer-indexed arrays](https://github.com/evanw/esbuild/blob/main/internal/js_parser/js_parser.go) instead of pointer trees, and printing reuses custom buffer pools to stay off the heap.
+
+It’s brilliant code, but it’s not the kind of Go most teams write or can maintain. It's why Evan is the [sole contributor](https://github.com/evanw/esbuild/graphs/contributors) to the project.
+
+And that’s the real tradeoff: Go _can_ be lightning fast, but only if you leave idiomatic Go behind. Most teams never do that, and it'd be a recipe for disaster if they did. So in practice, Go’s performance ceiling is much lower than its theoretical one.
+
+## Memory Arenas
+
+When it comes to memory, Golang uses a garbage collector (GC) which simplifies memory management for the majority of software. But for the minority, the GC needs to track millions of short-lived objects, verify mark bits, and run write barriers, while also sweeping them all away milliseconds later. It can be a massive bottleneck, and unless you're an Evan Wallace level programmer—heads up, you're not—the only way around it is to migrate to lower-level languages with more granular memory management.
+
+That was set to change when Dan Scales proposed **[Memory Arenas](https://github.com/golang/go/issues/51317)** three years ago.
+
+Instead of asking the runtime for memory object-by-object, an Arena lets you allocate a large pool of memory upfront. You fill that pool with objects using a simple bump pointer (which is CPU cache-friendly), and when you are done, you free the _entire pool_ at once. The runtime doesn't have to track the individual objects. It just knows: _"This chunk of memory is in use"_ and then _"Now it is empty."_
+
+```go
+package main
+
+import (
+ "fmt"
+ "arena" // requires GOEXPERIMENT=arenas
+)
+
+func main() {
+ // 1. Create a memory arena
+ a := arena.NewArena()
+
+ // 2. Free the ENTIRE arena when we are done
+ defer a.Free()
+
+ // 3. Allocate objects cheaply inside the arena
+ // The GC ignores these individual allocations
+ s := arena.MakeSlice[int](a, 5, 5)
+ for i := 0; i < len(s); i++ {
+  s[i] = i * 2
+ }
+
+ fmt.Println("Slice from arena:", s)
+}
+```
+
+If you're writing a compiler frontend or a high-throughput file reader, the inputs and outputs are extremely predictable. Using the GC to babysit every token would only add unnecessary weight when you really need raw speed. Memory Arenas were the escape hatch everyone was looking for.
+
+## Why They Killed Arenas
+
+A year after Arenas were proposed, the Go team put them on indefinite hold. Most of the reasons centered around **Safety**.
+
+One concern was that Arenas introduced "Use-After-Free" bugs, a classic C++ problem where you access memory after the arena has been cleared, causing a crash. This went against Go's promise of simplicity and even trickled down to primitives like strings which would often point to dead memory after an Arena was freed, breaking their safety contract. There were also issues using Arenas in complex standard libraries like `math/big` that ironically degraded performance.
+
+These were real issues, but not a showstopper. Go already tolerates `unsafe`, `cgo`, and map races. All of these are dangerous features the team has navigated before. If safety alone killed Arenas, they would have been refined, not abandoned. So why were they so quick to jump ship?
+
+The **real** reason was the **"Infectious API" problem.**
+
+To get performance benefits, you can't just create an arena locally; you have to pass it down the call stack so functions can allocate inside it. This forces a rewrite of function signatures. For example, a simple JSON parser function like `Unmarshal(data []byte)` would need to become `Unmarshal(data []byte, a *arena.Arena)`.
+
+This terrified the Go community, which was still recovering from the introduction of `context.Context`. Years ago, Context was introduced as an opt-in feature for timeouts, but it effectively "infected" the entire language. Today, nearly every function signature begins with `ctx`, and the Go team hated the idea of a "second Context" in the ecosystem.
+
+Crucially, though, adding the Arena argument breaks **Interfaces** entirely.
+
+Say the standard library defines the following:
+
+```go
+type Unmarshaler interface {
+    Unmarshal([]byte) error
+}
+```
+
+An Arena-aware implementation, `UnmarshalerArena`, would be incompatible with that interface because of the extra argument. This creates two parallel universes:
+
+1.  **The Standard World:** Works with `encoding/json`, `net/http`, and all existing middleware.
+2.  **The Arena World:** Can only work with libraries explicitly rewritten to accept `*Arena`.
+
+To introduce Arenas, **Go would have to fragment its ecosystem**, destroying the composability that makes the language great. They looked at the abyss of two incompatible worlds and decided the performance wasn't worth the mess.
+
+## How Go Risks Losing Its Middle Ground
+
+By killing Arenas, Go signaled that it prioritizes simplicity over raw power. It was effectively resigning from the high-performance tier to remain the king of the "good enough" middle ground. Now, this itself isn't a problem: Go can still operate in this middle as they always have. The danger is that in the future, the middle might not be enough.
+
+The language is currently being squeezed from both ends. It thrives in being significantly faster/scalable than interpreted languages and significantly easier than systems languages. But that middle ground is shrinking.
+
+From above, the high-velocity languages (Python, TypeScript) are slowly solving their performance woes. Runtimes are getting faster, and tooling is becoming more optimized. From below, systems languages (Rust, Zig, C++) are chipping away at their complexity. Admittedly, Rust is still painful to learn and Zig is arguably too raw. But the point is: they are actively chasing developer velocity and are not bound by philosophy in the pursuit of improvement.
+
+Go, however, has just signaled that it is bound.
+
+By killing Memory Arenas, Go effectively capped its performance ceiling. Ever since, they have been trying to prove they can achieve Arena-like benefits with, for example, improved GC algorithms, but all have failed to land. Even recent wins, like Swiss Tables or GOMEMLIMIT, offer nice incremental boosts, but they aren't the step-function change like manual memory management.
+
+This leaves Go in a precarious spot. If Go refuses to add complexity to gain performance and cannot engineer its way around the GC, it effectively resigns from the pursuit of the high-performance tier.
+
+The danger isn't that Go will vanish tomorrow. The danger is that as the "slow" languages get faster and the "hard" languages get easier, the "middle ground" that Go owns will no longer exist. Go risks becoming the COBOL of Cloud Native: reliable, ubiquitous, and essentially frozen in time, while the next generation of infrastructure gets built in languages that didn't compromise on power.

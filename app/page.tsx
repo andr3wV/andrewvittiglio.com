@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import Link from 'next/link';
-import { FlickeringGrid } from './components/flickering-grid';
 import { AtSignIcon } from './components/layouts/icons/at-sign-icon';
 import { GithubIcon } from './components/layouts/icons/github-icon';
 import { LinkedinIcon } from './components/layouts/icons/linkedin-icon';
@@ -10,7 +9,7 @@ import { merryWeather } from './fonts';
 
 export default function Home() {
   return (
-    <FlickeringGrid>
+    <>
       <div className="absolute top-4 right-4 z-10">
         <ThemeSwitch />
       </div>
@@ -112,6 +111,6 @@ export default function Home() {
           </section>
         </div>
       </div>
-    </FlickeringGrid>
+    </>
   );
 }
