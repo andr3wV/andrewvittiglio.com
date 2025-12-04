@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: '%s | Andrew Vittiglio',
     default: 'Andrew Vittiglio',
   },
-  description: 'Software Engineer and forever a student of the craft.',
+  description: 'Software Engineer going all the way.',
   metadataBase: new URL('https://andrewvittiglio.com'),
   icons: {
     icon: [
